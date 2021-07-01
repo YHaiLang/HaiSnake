@@ -6,8 +6,12 @@ function Game() {
     this.col = 20;
     // 初始化
     this.init();
-    //将new出的蛇类对象添加到属性上
+    //实例化蛇类,将new出的蛇类对象添加到属性上
     this.snake = new Snake();
+    //执行定时器任务
+    this.start();
+    //事件监听
+    this.bindEvent();
 }
 
 Game.prototype.init = function() {
@@ -41,13 +45,33 @@ Game.prototype.clear = function() {
         }
     }
 }
+Game.prototype.bindEvent = function() {
+    document.addEventListener('keydown',(e) => {
+        switch (e.keyCode) {
+            case 37:
+                this.snake.direction = 'L';
+                break;
+            case 38:
+                this.snake.direction = 'U';
+                break;
+            case 39:
+                this.snake.direction = 'R';
+                break;
+            case 40:
+                this.snake.direction = 'D';
+                break;
 
-var timer = setInterval(function() {
-    //这个游戏的渲染本质是 清屏--更新--渲染
-    //清屏
-    game.clear();
-    //更新
-    game.snake.update();
-    //渲染
-    game.snake.render();
-},1000)
+        }
+    },false)
+}
+Game.prototype.start = function() {
+    this.timer = setInterval(function() {
+        //这个游戏的渲染本质是 清屏--更新--渲染
+        //清屏
+        game.clear();
+        //更新
+        game.snake.update();
+        //渲染
+        game.snake.render();
+    },1000)
+}
