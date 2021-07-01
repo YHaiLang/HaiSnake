@@ -31,9 +31,23 @@ Game.prototype.init = function() {
 }
 
 Game.prototype.setColor = function(row,col,color) {
-    document.getElementsByName('tr')[row].document.getElementsByName('td')[col].style.backgroundColor = color;
+    this.dom.getElementsByTagName('tr')[row].getElementsByTagName('td')[col].style.background = color;
+}
+
+Game.prototype.clear = function() {
+    for(var i=0;i<this.row;i++) {
+        for(var j=0;j<this.col;j++) {
+            this.dom.getElementsByTagName('tr')[i].getElementsByTagName('td')[j].style.background = 'white';
+        }
+    }
 }
 
 var timer = setInterval(function() {
-    // game.snake.render();
-},2000)
+    //这个游戏的渲染本质是 清屏--更新--渲染
+    //清屏
+    game.clear();
+    //更新
+    game.snake.update();
+    //渲染
+    game.snake.render();
+},1000)
